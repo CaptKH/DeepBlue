@@ -129,17 +129,24 @@
   <ItemGroup>
     <ClCompile Include="src\GLCore.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\ResourceManager.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\FileIO.h" />
     <ClInclude Include="include\GLCore.h" />
+    <ClInclude Include="include\Material.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\ResourceManager.h" />
+    <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\VertexShader.glsl" />
+    <None Include="shaders\StandardFS.glsl" />
+    <None Include="shaders\StandardVS.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

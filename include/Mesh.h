@@ -10,15 +10,14 @@ class Mesh
 {
 private:
 	GLuint   vbo;
-	Vertex*  vertices;
 	unsigned numVertices;
 
 public:
 	Mesh(Vertex* verts, unsigned numVerts);
+	~Mesh(void);
 
 	// Accessors
 	GLuint   GetVBO(void)		  { return vbo; }
-	Vertex*  GetVertices(void)	  { return vertices; }
 	unsigned GetNumVertices(void) { return numVertices; }
 };
 

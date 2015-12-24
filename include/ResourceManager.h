@@ -3,8 +3,38 @@
 
 #include "Singleton.h"
 
-class ResourceManager : public Singleton
+#include <string>
+#include <unordered_map>
+
+#include "Mesh.h"
+#include "Material.h"
+#include "Shader.h"
+
+class ResourceManager : public Singleton<ResourceManager>
 {
+private:
+	std::unordered_map<std::string, Mesh*>     meshes;
+	std::unordered_map<std::string, Material*> materials;
+	std::unordered_map<std::string, Shader*>   shaders;
+
+public:
+	ResourceManager(void);
+	~ResourceManager(void);
+
+	// Meshes
+	Mesh* GetMesh(std::string id);
+	bool  RegisterMesh(std::string id, Mesh* mesh);
+
+	// Materials
+	Material* GetMaterial(std::string id);
+	bool RegisterMaterial(std::string id, Material* mat);
+
+	// Shaders
+	Shader* GetShader(std::string id);
+	bool    RegisterShader(std::string id, Shader* shader);
+
+	void GenerateMeshes(void);
+	void GenerateShaders(void);
 };
 
 #endif

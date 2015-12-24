@@ -39,6 +39,15 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLCore.h">
@@ -56,9 +65,21 @@
     <ClInclude Include="include\Singleton.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="include\Material.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\VertexShader.glsl">
+    <None Include="shaders\StandardVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\StandardFS.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

@@ -10,7 +10,6 @@ GLCore::GLCore(void)
 
 GLCore::~GLCore(void)
 {
-	delete(window); window = 0;
 }
 
 bool GLCore::Initialize(void) 
