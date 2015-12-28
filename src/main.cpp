@@ -5,15 +5,15 @@
 #include <GLCore.h>
 #include <ResourceManager.h>
 
+#include <LinkedList.h>
+
 int main() {
 	GLCore* core = new GLCore();
 	ResourceManager* rManager = ResourceManager::Instance();
-
 	core->Initialize();
 	rManager->GenerateMeshes();
 	rManager->GenerateShaders();
 	core->Run();
-
 	delete core;
 
 	return 0;
