@@ -2,30 +2,40 @@
 
 EntityManager::EntityManager(void)
 {
-	entities = std::vector<Entity*>();
+	entityCounter = 0;
+	entities = new EntityLinkedList();
 }
 
-std::vector<Entity*> EntityManager::Entities(void)
+EntityManager::~EntityManager(void)
+{
+	entities->Clear();
+	entities = nullptr;
+	entities = 0;
+}
+
+EntityLinkedList* EntityManager::Entities(void)
 {
 	return entities;
 }
 
 Entity* EntityManager::Create(std::string tag)
 {
-	for (int i = 0; i < entities.size(); i++)
-	{
+	entityCounter++;
+	Entity* e = new Entity(tag, entityCounter);
+	entities->Add(e);
 
-	}
-
-	return new Entity();
+	return e;
 }
 
 void EntityManager::Destroy(Entity* e)
 {
-	unsigned entityID = e->GetID();
-	markedForDestruction.push_back(entityID);
+	e->IsActive(false);
 }
 
 void EntityManager::Cleanup(void)
 {
+	LinkedList<Entity*> toKeep;
+	
+	if (entities->Count() > 0) {
+	}
 }

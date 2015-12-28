@@ -8,6 +8,7 @@ class Entity
 private:
 	std::string tag;
 	const unsigned ID;
+	bool isActive;
 
 public:
 	Entity(void);
@@ -15,6 +16,8 @@ public:
 
 	std::string GetTag(void);
 	const unsigned GetID(void);
+	bool IsActive();
+	void IsActive(bool val);
 
 	bool operator == (Entity* other);
 	bool operator == (Entity  other);

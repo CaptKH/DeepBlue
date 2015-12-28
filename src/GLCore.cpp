@@ -1,6 +1,8 @@
 #include <GLCore.h>
 #include <iostream>
 
+#include <EntityManager.h>
+
 // Input forward declarations
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode);
 
@@ -51,6 +53,8 @@ void GLCore::Run(void) {
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();			// Process current frames events & execute necessary callbacks
 		
+		EntityManager* eManager = EntityManager::Instance();
+
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glfwSwapBuffers(window);	

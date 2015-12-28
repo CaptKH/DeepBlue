@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Entity.h" />
+    <ClInclude Include="include\EntityLinkedList.h" />
     <ClInclude Include="include\EntityManager.h" />
     <ClInclude Include="include\FileIO.h" />
     <ClInclude Include="include\GLCore.h" />

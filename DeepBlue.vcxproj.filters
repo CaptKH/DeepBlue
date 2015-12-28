@@ -116,6 +116,9 @@
     <ClInclude Include="include\Node.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="include\EntityLinkedList.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\StandardVS.glsl">
