@@ -121,9 +121,8 @@ public:
 					first->~Node();
 					first->SetNext(nullptr);
 					first->SetPrevious(nullptr);
-					first = nullptr;
-					count--;
 					first = reset;
+					count--;
 					break;
 				}
 				first = first->Next();

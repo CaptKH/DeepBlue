@@ -9,6 +9,15 @@
 
 int main() {
 	GLCore* core = new GLCore();
+	EntityManager* eManager = EntityManager::Instance();
+
+	Entity* e1 = eManager->Create("e1");
+	Entity* e2 = eManager->Create("e2");
+	Entity* e3 = eManager->Create("e3");
+	Entity* e4 = eManager->Create("e4");
+
+	eManager->Destroy(e3);
+	eManager->Entities()->CleanUp();
 	core->Initialize();
 	core->Run();
 	delete core;
