@@ -19,8 +19,21 @@ public:
 
 	Entity* Create(std::string tag);
 	void    Destroy(Entity* e);
+	Entity* Get(std::string tag);
+	void    Cleanup(void);
 
-	void Cleanup(void);
+	bool AddComponent(Entity* e, Component* c);
+	bool RemoveComponent(Entity* e, ComponentType t);
+	
+	template <class T>
+	T* GetComponent(Entity* e, ComponentType t)
+	{
+		Entity* inList = *entities->Get(e);
+		if(inList) {
+			return inList->GetComponents()->GetComponent(t);
+		}
+		return nullptr;
+	}
 };
 
 #endif

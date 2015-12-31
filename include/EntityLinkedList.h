@@ -14,6 +14,24 @@ public:
 		last = nullptr;
 	}
 
+	Entity* GetEntity(std::string tag)
+	{
+		if (first) {
+			Node<Entity*>* reset = first;
+			Entity* check = new Entity();
+			while (first) {
+				check = *first->Data();
+				if (check->GetTag() == tag) {
+					return check;
+					first = reset;
+				}
+				first = first->Next();
+			}
+			first = reset;
+		}
+		return nullptr;
+	}
+
 	void CleanUp(void)
 	{
 		if (first) {

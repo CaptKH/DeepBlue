@@ -137,9 +137,11 @@
     <ClCompile Include="src\RenderComponent.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component.h" />
+    <ClInclude Include="include\ComponentLinkedList.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\EntityLinkedList.h" />
     <ClInclude Include="include\EntityManager.h" />
@@ -153,6 +155,7 @@
     <ClInclude Include="include\ResourceManager.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\TransformComponent.h" />
     <ClInclude Include="include\Vertex.h" />
   </ItemGroup>
   <ItemGroup>

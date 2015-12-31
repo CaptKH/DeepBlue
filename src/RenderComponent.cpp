@@ -2,13 +2,12 @@
 
 RenderComponent::RenderComponent(void)
 {
-	Component();
 	type = ComponentType::RENDER;
 }
 
-RenderComponent::RenderComponent(const unsigned eID, ComponentType t)
+RenderComponent::~RenderComponent(void)
 {
-	Component(eID, t);
+
 }
 
 Mesh* RenderComponent::GetMesh(void)
@@ -19,4 +18,10 @@ Mesh* RenderComponent::GetMesh(void)
 Material* RenderComponent::GetMaterial(void)
 {
 	return material;
+}
+
+bool RenderComponent::operator == (Component& other)
+{
+	if (this->type == other.GetType()) return true;
+	return false;
 }

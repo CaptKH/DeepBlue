@@ -5,7 +5,7 @@
 #include "Mesh.h"
 #include "Material.h"
 
-class RenderComponent : protected Component
+class RenderComponent : public Component
 {
 private:
 	Mesh* mesh;
@@ -13,10 +13,12 @@ private:
 
 public:
 	RenderComponent(void);
-	RenderComponent(const unsigned eID, ComponentType t);
+	virtual ~RenderComponent(void);
 
 	Mesh* GetMesh(void);
 	Material* GetMaterial(void);
+
+	bool operator == (Component& other);
 };
 
 #endif

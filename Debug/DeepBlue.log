@@ -1,4 +1,4 @@
-﻿Build started 12/28/2015 1:57:39 AM.
+﻿Build started 12/31/2015 2:29:07 AM.
      1>Project "C:\Users\Captain Kirk\Desktop\DeepBlue\DeepBlue.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\main.cpp
@@ -14,9 +14,10 @@
          Debug\RenderComponent.obj
          Debug\ResourceManager.obj
          Debug\Shader.obj
+         Debug\TransformComponent.obj
          DeepBlue.vcxproj -> C:\Users\Captain Kirk\Desktop\DeepBlue\Debug\DeepBlue.exe
      1>Done Building Project "C:\Users\Captain Kirk\Desktop\DeepBlue\DeepBlue.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.98
+Time Elapsed 00:00:01.42

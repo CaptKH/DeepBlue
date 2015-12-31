@@ -41,29 +41,29 @@ public:
 		return last;
 	}
 
-	T* Add(T& data)
+	T* Add(T* data)
 	{
 		count++;
 
 		// >= 2 Nodes
 		if (last) {
-			last->SetNext(new Node<T>(data));
+			last->SetNext(new Node<T>(*data));
 			last->Next()->SetPrevious(last);
 			last = last->Next();
 			
 		}
 		// == 1 Node
 		else if (first) {
-			last = new Node<T>(data);
+			last = new Node<T>(*data);
 			first->SetNext(last);
 			last->SetPrevious(first);
 		}
 		// Empty list
 		else {
-			first = new Node<T>(data);
+			first = new Node<T>(*data);
 		}
 
-		return &data;
+		return data;
 	}
 
 	T* Remove(T& data)
@@ -76,7 +76,7 @@ public:
 				first = nullptr;
 			}
 			// == 2 Nodes
-			else if(first->Next() == last) {
+			else if (first->Next() == last) {
 				first = last;
 				first->Previous()->~Node();
 				first->Previous()->SetNext(nullptr);
@@ -134,16 +134,33 @@ public:
 		return &data;
 	}
 
-	bool Contains(T* data)
+	T* Get(T& data)
 	{
 		if (first) {
 			Node<T>* reset = first;
 			while (first) {
-				if (*first->Data() == *data) {
+				if (*first->Data() == data) {
+					return first->Data();
+				}
+				first = first->Next();
+			}
+			first = reset;
+		}
+		return nullptr;
+	}
+
+	virtual bool Contains(T& data)
+	{
+		if (first) {
+			Node<T>* reset = first;
+			while (first) {
+				if (*first->Data() == data) {
+					first = reset;
 					return true;
 				}
 				first = first->Next();
 			}
+			first = reset;
 		}
 
 		return false;

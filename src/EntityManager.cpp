@@ -22,7 +22,7 @@ Entity* EntityManager::Create(std::string tag)
 {
 	entityCounter++;
 	Entity* e = new Entity(tag, entityCounter);
-	entities->Add(e);
+	entities->Add(&e);
 
 	return e;
 }
@@ -32,10 +32,34 @@ void EntityManager::Destroy(Entity* e)
 	e->IsActive(false);
 }
 
+Entity* EntityManager::Get(std::string tag)
+{
+	return entities->GetEntity(tag);
+}
+
 void EntityManager::Cleanup(void)
 {
-	LinkedList<Entity*> toKeep;
-	
-	if (entities->Count() > 0) {
+	entities->CleanUp();
+}
+
+bool EntityManager::AddComponent(Entity* e, Component* c)
+{
+	Entity* inList = *entities->Get(e);
+
+	if (inList && !inList->GetComponents()->Contains(c->GetType())) {
+		inList->GetComponents()->Add(&c);
+		return true;
 	}
+
+	return false;
+}
+
+bool EntityManager::RemoveComponent(Entity* e, ComponentType t)
+{
+	Entity* inList = *entities->Get(e);
+
+	if (inList) {
+		return inList->GetComponents()->RemoveComponent(t);
+	}
+	return false;
 }

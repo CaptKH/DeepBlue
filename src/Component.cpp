@@ -1,20 +1,21 @@
 #include <Component.h>
 
 Component::Component(void)
-	: entityID(0), type(ComponentType::BASE)
 {
-}
-
-Component::Component(const unsigned eID, ComponentType t)
-	: entityID(eID), type(t)
-{
+	type = ComponentType::BASE;
 }
 
 Component::~Component(void)
 {
 }
 
-const unsigned Component::GetEntityID(void)
+ComponentType Component::GetType(void)
 {
-	return entityID;
+	return type;
+}
+
+bool Component::operator == (Component* other)
+{
+	if (other->GetType() == this->GetType()) return true;
+	return false;
 }
