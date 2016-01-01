@@ -5,10 +5,14 @@
 #include "GLEW\glew.h"
 #include "GLFW\glfw3.h"
 
+#include "SystemManager.h"
+
 class GLCore
 {
 private:
 	GLFWwindow* window;
+
+	SystemManager* sManager;
 
 public:
 	GLCore(void);

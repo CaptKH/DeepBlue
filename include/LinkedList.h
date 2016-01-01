@@ -140,6 +140,7 @@ public:
 			Node<T>* reset = first;
 			while (first) {
 				if (*first->Data() == data) {
+					first = reset;
 					return first->Data();
 				}
 				first = first->Next();

@@ -25,6 +25,8 @@ struct Vector4
 
 struct Vertex
 {
+	Vector3 position;
+
 	Vertex()
 	{
 		position.x = 0.0f;
@@ -38,8 +40,6 @@ struct Vertex
 		position.y = y;
 		position.z = z;
 	}
-
-	Vector3 position;
 };
 
 #endif

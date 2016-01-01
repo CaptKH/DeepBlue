@@ -69,12 +69,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\lib;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(ProjectDir)src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -135,8 +137,11 @@
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\RenderComponent.cpp" />
+    <ClCompile Include="src\RenderSystem.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\System.cpp" />
+    <ClCompile Include="src\SystemManager.cpp" />
     <ClCompile Include="src\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +157,12 @@
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\Node.h" />
     <ClInclude Include="include\RenderComponent.h" />
+    <ClInclude Include="include\RenderSystem.h" />
     <ClInclude Include="include\ResourceManager.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\System.h" />
+    <ClInclude Include="include\SystemManager.h" />
     <ClInclude Include="include\TransformComponent.h" />
     <ClInclude Include="include\Vertex.h" />
   </ItemGroup>

@@ -7,7 +7,7 @@ Shader::Shader(std::string fileName, ShaderType t)
 	type = t;
 
 	// Generate the shader
-	const GLchar* shaderCode = ReadShaderFile("VertexShader.glsl").c_str();
+	const GLchar* shaderCode = ReadShaderFile(fileName).c_str();
 	switch (t)
 	{
 		case(ShaderType::VERTEXSHADER) :
@@ -28,6 +28,6 @@ Shader::Shader(std::string fileName, ShaderType t)
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cout << "ERROR: Shader compilation failed.\n" << infoLog << std::endl;
+		std::cout << "ERROR: Shader compilation failed. " << t << "\n" << infoLog << std::endl;
 	}
 }

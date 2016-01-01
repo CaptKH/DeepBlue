@@ -9,7 +9,9 @@ private:
 	GLuint shaderProgram;
 
 public:
-	Material(Shader& vShader, Shader& fShader);
+	Material(Shader* vShader, Shader* fShader);
+
+	GLuint GetProgram(void);
 };
 
 #endif

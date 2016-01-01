@@ -1,6 +1,9 @@
 #ifndef ENTITY_MANAGER
 #define ENTITY_MANAGER
 
+#include <vector>
+
+
 
 #include "Singleton.h"
 #include "EntityLinkedList.h"
@@ -18,19 +21,21 @@ public:
 	EntityLinkedList* Entities(void);
 
 	Entity* Create(std::string tag);
-	void    Destroy(Entity* e);
 	Entity* Get(std::string tag);
+	void    Destroy(Entity* e);
 	void    Cleanup(void);
 
+	/* Component Functions */
 	bool AddComponent(Entity* e, Component* c);
 	bool RemoveComponent(Entity* e, ComponentType t);
-	
+	std::vector<Entity*> EntitiesWithComponents(ComponentType types, ...);
+
 	template <class T>
 	T* GetComponent(Entity* e, ComponentType t)
 	{
 		Entity* inList = *entities->Get(e);
 		if(inList) {
-			return inList->GetComponents()->GetComponent(t);
+			return dynamic_cast<T*>(inList->GetComponents()->GetComponent(t));
 		}
 		return nullptr;
 	}

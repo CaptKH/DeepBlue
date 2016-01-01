@@ -9,9 +9,9 @@ std::string ReadShaderFile(std::string fileName)
 	// String to store shader code
 	std::string shaderCode;
 	// Create stream to file
-	std::ifstream shaderStream("../" + fileName, std::ios::in);
+	std::ifstream shaderStream("shaders/" + fileName, std::ios::in);
 
-	// Open sream
+	// Open stream
 	if (shaderStream.is_open()) {
 		// To store shader file lines
 		std::string line;

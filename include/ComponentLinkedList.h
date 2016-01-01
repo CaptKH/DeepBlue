@@ -50,7 +50,7 @@ struct ComponentLinkedList : public LinkedList<Component*>
 		return false;
 	}
 
-	virtual bool Contains(ComponentType t)
+	bool Contains(ComponentType t)
 	{
 		if (first) {
 			Node<Component*>* reset = first;

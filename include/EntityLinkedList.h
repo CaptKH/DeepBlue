@@ -14,6 +14,11 @@ public:
 		last = nullptr;
 	}
 
+	~EntityLinkedList(void)
+	{
+		Clear();
+	}
+
 	Entity* GetEntity(std::string tag)
 	{
 		if (first) {
@@ -22,8 +27,8 @@ public:
 			while (first) {
 				check = *first->Data();
 				if (check->GetTag() == tag) {
-					return check;
 					first = reset;
+					return check;
 				}
 				first = first->Next();
 			}

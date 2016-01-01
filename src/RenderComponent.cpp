@@ -1,13 +1,16 @@
 #include <RenderComponent.h>
 
-RenderComponent::RenderComponent(void)
+RenderComponent::RenderComponent(Mesh* m, Material* mat)
 {
 	type = ComponentType::RENDER;
+	mesh = m;
+	material = mat;
 }
 
 RenderComponent::~RenderComponent(void)
 {
-
+	mesh = nullptr;
+	material = nullptr;
 }
 
 Mesh* RenderComponent::GetMesh(void)
@@ -18,10 +21,4 @@ Mesh* RenderComponent::GetMesh(void)
 Material* RenderComponent::GetMaterial(void)
 {
 	return material;
-}
-
-bool RenderComponent::operator == (Component& other)
-{
-	if (this->type == other.GetType()) return true;
-	return false;
 }

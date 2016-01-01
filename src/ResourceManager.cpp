@@ -3,6 +3,12 @@
 ResourceManager::ResourceManager(void)
 {
 	meshes = std::unordered_map<std::string, Mesh*>();
+	materials = std::unordered_map<std::string, Material*>();
+	shaders = std::unordered_map<std::string, Shader*>();
+
+	GenerateMeshes();
+	GenerateShaders();
+	GenerateMaterials();
 }
 
 ResourceManager::~ResourceManager(void)
@@ -72,25 +78,49 @@ bool ResourceManager::RegisterShader(std::string id, Shader* shader)
 	return true;
 }
 
-void ResourceManager::GenerateMeshes(void) 
+GLuint ResourceManager::GetVAO(std::string id) 
+{
+	if (vertexArrayObjects.find(id) == vertexArrayObjects.end())
+		return 0;
+	else
+		return vertexArrayObjects.find(id)->second;
+}
+
+bool ResourceManager::RegisterVAO(std::string id, GLuint vao)
+{
+	if (vertexArrayObjects.find(id) != vertexArrayObjects.end())
+		return false;
+	else
+		vertexArrayObjects.emplace(id, vao);
+
+	return true;
+}
+
+void ResourceManager::GenerateShaders(void)
+{
+	Shader* standardVS = new Shader("StandardVS.glsl", ShaderType::VERTEXSHADER);
+	RegisterShader("StandardVS", standardVS);
+
+	Shader* standardFS = new Shader("StandardFS.glsl", ShaderType::FRAGMENTSHADER);
+	RegisterShader("StandardFS", standardFS);
+}
+
+void ResourceManager::GenerateMeshes(void)
 {
 	GLuint triangleVBO;
 	Vertex triangleVerts[] =
 	{
 		Vertex(-0.5f, -0.5f, 0.0f),
-		Vertex( 0.5f, -0.5f, 0.0f),
-		Vertex( 0.0f,  0.5f, 0.0f)
+		Vertex(0.5f, -0.5f, 0.0f),
+		Vertex(0.0f,  0.5f, 0.0f)
 	};
 
 	Mesh* triangleMesh = new Mesh(triangleVerts, 3);
 	RegisterMesh("Triangle", triangleMesh);
 }
 
-void ResourceManager::GenerateShaders(void)
+void ResourceManager::GenerateMaterials(void)
 {
-	Shader* standardVS = new Shader("StandardVS.glsl", ShaderType::VERTEXSHADER);
-	RegisterShader("standardVS", standardVS);
-
-	Shader* standardFS = new Shader("StandardFS.glsl", ShaderType::FRAGMENTSHADER);
-	RegisterShader("StandardFS", standardFS);
+	Material* standard = new Material(GetShader("StandardVS"), GetShader("StandardFS"));
+	RegisterMaterial("Standard", standard);
 }

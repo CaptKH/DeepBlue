@@ -12,13 +12,11 @@ private:
 	Material* material;
 
 public:
-	RenderComponent(void);
+	RenderComponent(Mesh* m, Material* mat);
 	virtual ~RenderComponent(void);
 
 	Mesh* GetMesh(void);
 	Material* GetMaterial(void);
-
-	bool operator == (Component& other);
 };
 
 #endif

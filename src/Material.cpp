@@ -1,11 +1,11 @@
 #include <Material.h>
 #include <iostream>
 
-Material::Material(Shader& vShader, Shader& fShader)
+Material::Material(Shader* vShader, Shader* fShader)
 {
 	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vShader.GetShader());
-	glAttachShader(shaderProgram, fShader.GetShader());
+	glAttachShader(shaderProgram, vShader->GetShader());
+	glAttachShader(shaderProgram, fShader->GetShader());
 	glLinkProgram(shaderProgram);
 
 	// Check for errors in program compilation
@@ -16,4 +16,9 @@ Material::Material(Shader& vShader, Shader& fShader)
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR: Program compilation failed.\n" << infoLog << std::endl;
 	}
+}
+
+GLuint Material::GetProgram(void)
+{
+	return shaderProgram;
 }
