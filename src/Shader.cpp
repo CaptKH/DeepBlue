@@ -2,18 +2,19 @@
 #include <FileIO.h>
 #include <iostream>
 
-Shader::Shader(std::string fileName, ShaderType t) 
+Shader::Shader(const GLchar* filePath, ShaderType t) 
 {
 	type = t;
 
 	// Generate the shader
-	const GLchar* shaderCode = ReadShaderFile(fileName).c_str();
+	std::string shaderString = ReadShaderFile(filePath);
+	const GLchar* shaderCode = shaderString.c_str();
 	switch (t)
 	{
-		case(ShaderType::VERTEXSHADER) :
+		case ShaderType::VERTEXSHADER:
 			shader = glCreateShader(GL_VERTEX_SHADER);
 			break;
-		case(ShaderType::FRAGMENTSHADER) :
+		case ShaderType::FRAGMENTSHADER:
 			shader = glCreateShader(GL_FRAGMENT_SHADER);
 			break;
 		default:
@@ -30,4 +31,9 @@ Shader::Shader(std::string fileName, ShaderType t)
 		glGetShaderInfoLog(shader, 512, NULL, infoLog);
 		std::cout << "ERROR: Shader compilation failed. " << t << "\n" << infoLog << std::endl;
 	}
+}
+
+Shader::~Shader(void)
+{
+	glDeleteShader(shader);
 }

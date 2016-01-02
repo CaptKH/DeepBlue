@@ -19,7 +19,8 @@ public:
 	~GLCore(void);
 
 	bool Initialize(void);
-	void Run(void);
+
+	GLFWwindow* Window(void);
 };
 
 #endif

@@ -1,10 +1,6 @@
 #include <GLCore.h>
 #include <iostream>
 
-#include <EntityManager.h>
-
-// Systems
-#include <RenderSystem.h>
 
 // Input forward declarations
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode);
@@ -49,22 +45,7 @@ bool GLCore::Initialize(void)
 	glViewport(0, 0, 1920, 1080);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-	sManager = SystemManager::Instance();
-	sManager->AddSystem(new RenderSystem());
-
 	return true;
-}
-
-void GLCore::Run(void) {
-	while (!glfwWindowShouldClose(window)) {
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwPollEvents();			// Process current frames events & execute necessary callbacks
-		sManager->Update(0,0);
-
-		glfwSwapBuffers(window);	
-	}
-
-	glfwTerminate();
 }
 
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
@@ -72,4 +53,9 @@ void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
 	// Check if escape has been pressed
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GL_TRUE);
+}
+
+GLFWwindow* GLCore::Window(void)
+{
+	return window;
 }

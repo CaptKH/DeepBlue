@@ -115,8 +115,24 @@ void ResourceManager::GenerateMeshes(void)
 		Vertex(0.0f,  0.5f, 0.0f)
 	};
 
-	Mesh* triangleMesh = new Mesh(triangleVerts, 3);
+	int triangleIndices[] = { 0, 1, 2 };
+
+	Mesh* triangleMesh = new Mesh(triangleVerts, 3, triangleIndices, 3);
 	RegisterMesh("Triangle", triangleMesh);
+
+	GLuint squareVBO;
+	Vertex squareVerts[] =
+	{
+		Vertex(-0.5f, -0.5f, 0.0f),
+		Vertex(-0.5f,  0.5f, 0.0f),
+		Vertex( 0.5f,  0.5f, 0.0f),
+		Vertex( 0.5f, -0.5f, 0.0f)
+	};
+
+	int squareIndicies[] = { 0, 1, 2, 0, 2, 3 };
+
+	Mesh* squareMesh = new Mesh(squareVerts, 4, squareIndicies, 6);
+	RegisterMesh("Square", squareMesh);
 }
 
 void ResourceManager::GenerateMaterials(void)

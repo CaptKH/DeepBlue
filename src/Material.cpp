@@ -7,6 +7,7 @@ Material::Material(Shader* vShader, Shader* fShader)
 	glAttachShader(shaderProgram, vShader->GetShader());
 	glAttachShader(shaderProgram, fShader->GetShader());
 	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
 
 	// Check for errors in program compilation
 	GLint  success;
@@ -16,9 +17,17 @@ Material::Material(Shader* vShader, Shader* fShader)
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR: Program compilation failed.\n" << infoLog << std::endl;
 	}
+
+	transformUniform = glGetUniformLocation(shaderProgram, "transform");
+	viewUniform = glGetUniformLocation(shaderProgram, "view");
 }
 
 GLuint Material::GetProgram(void)
 {
 	return shaderProgram;
+}
+
+GLuint Material::GetTransformUniform(void)
+{
+	return transformUniform;
 }

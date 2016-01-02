@@ -3,26 +3,32 @@
 
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <iostream>
+
+
+#include <GLEW\glew.h>
 
 std::string ReadShaderFile(std::string fileName)
 {
+	std::string filePath = "shaders/" + fileName;
 	// String to store shader code
 	std::string shaderCode;
 	// Create stream to file
-	std::ifstream shaderStream("shaders/" + fileName, std::ios::in);
+	std::ifstream shaderFile;
 
-	// Open stream
-	if (shaderStream.is_open()) {
-		// To store shader file lines
-		std::string line;
+	shaderFile.exceptions(std::ifstream::badbit);
 
-		// Fill shaderCode with shader data
-		while (getline(shaderStream, line)) {
-			shaderCode += "\n" + line;
-		}
+	try {
+		shaderFile.open(filePath);
+		std::stringstream shaderStream;
+		shaderStream << shaderFile.rdbuf();
+		shaderFile.close();
 
-		// Close the stream
-		shaderStream.close();
+		shaderCode = shaderStream.str();
+	}
+	catch (std::ifstream::failure e) {
+
 	}
 
 	return shaderCode;

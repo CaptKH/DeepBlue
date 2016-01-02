@@ -11,20 +11,27 @@
 class Mesh 
 {
 private:
-	GLuint   vbo;
 	GLuint   vao;
+	GLuint   vbo;
+	GLuint   ebo;
 	Vertex*  vertices;
+	int*	 indices;
 	unsigned numVertices;
+	unsigned numIndices;
 
 public:
-	Mesh(Vertex* verts, unsigned numVerts);
+	Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds);
 	~Mesh(void);
 
 	// Accessors
-	GLuint   GetVBO(void)		  { return vbo; }
-	GLuint   GetVAO(void)		  { return vao; }
-	Vertex*  GetVertices(void)	  { return vertices;  }
-	unsigned GetNumVertices(void) { return numVertices; }
+	GLuint   GetVAO(void)		  { return vao;			}
+	GLuint   GetVBO(void)		  { return vbo;			}
+	GLuint   GetEBO(void)		  { return ebo;			}
+	Vertex*  Vertices(void)		  { return vertices;	}
+	int*     Indices(void)		  { return indices;		}
+	unsigned NumVertices(void)    { return numVertices; }
+	unsigned NumIndicies(void)	  { return numIndices;	}
+
 };
 
 #endif
