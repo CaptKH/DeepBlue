@@ -27,9 +27,15 @@ glm::mat4 Camera::ViewMatrix(void)
 	return view;
 }
 
-void Camera::Update(void)
+void Camera::UpdateViewMatrix(void)
 {
 	glm::vec3 target = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	view = glm::lookAt(position, target, up);
+}
+
+void Camera::Move(glm::vec3 trans)
+{
+	position += trans;
+	UpdateViewMatrix();
 }

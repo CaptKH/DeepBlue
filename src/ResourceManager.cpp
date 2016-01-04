@@ -110,9 +110,9 @@ void ResourceManager::GenerateMeshes(void)
 	GLuint triangleVBO;
 	Vertex triangleVerts[] =
 	{
-		Vertex(-0.5f, -0.5f, 0.0f),
-		Vertex(0.5f, -0.5f, 0.0f),
-		Vertex(0.0f,  0.5f, 0.0f)
+		Vertex(-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f),
+		Vertex( 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f),
+		Vertex( 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f)
 	};
 
 	int triangleIndices[] = { 0, 1, 2 };
@@ -123,16 +123,22 @@ void ResourceManager::GenerateMeshes(void)
 	GLuint squareVBO;
 	Vertex squareVerts[] =
 	{
-		Vertex(-0.5f, -0.5f, 0.0f),
-		Vertex(-0.5f,  0.5f, 0.0f),
-		Vertex( 0.5f,  0.5f, 0.0f),
-		Vertex( 0.5f, -0.5f, 0.0f)
+		Vertex(-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f),
+		Vertex(-0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f),
+		Vertex( 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f),
+		Vertex( 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f)
 	};
 
 	int squareIndicies[] = { 0, 1, 2, 0, 2, 3 };
 
 	Mesh* squareMesh = new Mesh(squareVerts, 4, squareIndicies, 6);
 	RegisterMesh("Square", squareMesh);
+
+	Mesh* suzanne = new Mesh("suzanne.obj");
+	RegisterMesh("Suzanne", suzanne);
+
+	Mesh* cube = new Mesh("cube.obj");
+	RegisterMesh("Cube", cube);
 }
 
 void ResourceManager::GenerateMaterials(void)

@@ -14,6 +14,7 @@ public:
 	Material(Shader* vShader, Shader* fShader);
 
 	GLuint GetProgram(void);
+	GLuint GetViewUniform(void);
 	GLuint GetTransformUniform(void);
 };
 

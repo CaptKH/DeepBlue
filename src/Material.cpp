@@ -27,6 +27,11 @@ GLuint Material::GetProgram(void)
 	return shaderProgram;
 }
 
+GLuint Material::GetViewUniform(void)
+{
+	return viewUniform;
+}
+
 GLuint Material::GetTransformUniform(void)
 {
 	return transformUniform;

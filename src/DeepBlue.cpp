@@ -20,13 +20,20 @@ void DeepBlue::Initialize(void)
 	core = new GLCore();
 	core->Initialize();
 
+	iManager = InputManager::Instance();
 	eManager = EntityManager::Instance();
 	sManager = SystemManager::Instance();
+	cManager = CameraManager::Instance();
 	rManager = ResourceManager::Instance();
+	// Initialize input callback functions
+	iManager->Initialize(core->Window());
 
 	test = eManager->Create("Test");
-	eManager->AddComponent(test, new RenderComponent(rManager->GetMesh("Triangle"), rManager->GetMaterial("Standard")));
-	eManager->AddComponent(test, new TransformComponent());
+
+	Entity* test2 = eManager->Create("Test2");
+	eManager->AddComponent(test2, new RenderComponent(rManager->GetMesh("Suzanne"), rManager->GetMaterial("Standard")));
+	eManager->AddComponent(test2, new TransformComponent(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(), glm::vec3(0.5f)));
+
 
 	sManager->AddSystem(new RenderSystem());
 }
@@ -37,9 +44,7 @@ void DeepBlue::Run(void)
 		glClear(GL_COLOR_BUFFER_BIT);
 		glfwPollEvents();		// Process current frames events & execute necessary callbacks
 
-		Entity* e = eManager->Get("Test");
-		TransformComponent* tComponent = eManager->GetComponent<TransformComponent>(e, ComponentType::TRANSFORM);
-		tComponent->Rotate(0, 1, 1, 0.005);
+		eManager->GetComponent<TransformComponent>(eManager->Get("Test2"), ComponentType::TRANSFORM)->Rotate(1.0f, 1.0f, 0.5f, 0.001f);
 
 		sManager->Update(0, 0);
 

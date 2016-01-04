@@ -1,10 +1,6 @@
 #include <GLCore.h>
 #include <iostream>
 
-
-// Input forward declarations
-void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode);
-
 GLCore::GLCore(void)
 {
 }
@@ -13,7 +9,7 @@ GLCore::~GLCore(void)
 {
 }
 
-bool GLCore::Initialize(void) 
+bool GLCore::Initialize(void)
 {
 
 	// Initialize GLFW
@@ -39,20 +35,11 @@ bool GLCore::Initialize(void)
 		return false;
 	}
 
-	// Initialize input
-	glfwSetKeyCallback(window, key_callback);
-
 	glViewport(0, 0, 1920, 1080);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
+	//glEnable(GL_DEPTH_TEST);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	return true;
-}
-
-void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
-{
-	// Check if escape has been pressed
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(w, GL_TRUE);
 }
 
 GLFWwindow* GLCore::Window(void)

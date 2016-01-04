@@ -19,7 +19,8 @@ public:
 	glm::vec3 Position(void);
 	glm::mat4 ViewMatrix(void);
 
-	void Update(void);
+	void UpdateViewMatrix(void);
+	void Move(glm::vec3 trans);
 };
 
 #endif

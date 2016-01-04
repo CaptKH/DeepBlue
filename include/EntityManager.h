@@ -33,7 +33,7 @@ public:
 	template <class T>
 	T* GetComponent(Entity* e, ComponentType t)
 	{
-		Entity* inList = *entities->Get(e);
+		Entity* inList = entities->GetEntity(e->GetTag());
 		if(inList) {
 			return dynamic_cast<T*>(inList->GetComponents()->GetComponent(t));
 		}

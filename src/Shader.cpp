@@ -1,13 +1,29 @@
 #include <Shader.h>
-#include <FileIO.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
-Shader::Shader(const GLchar* filePath, ShaderType t) 
+Shader::Shader(std::string fileName, ShaderType t) 
 {
 	type = t;
 
-	// Generate the shader
-	std::string shaderString = ReadShaderFile(filePath);
+	std::string filePath = "shaders/" + fileName;
+	std::string shaderString;
+	std::ifstream shaderFile;
+
+	shaderFile.exceptions(std::ifstream::badbit);
+
+	try {
+		shaderFile.open(filePath);
+		std::stringstream shaderStream;
+		shaderStream << shaderFile.rdbuf();
+		shaderFile.close();
+
+		shaderString = shaderStream.str();
+	}
+	catch (std::ifstream::failure e) {
+
+	}
 	const GLchar* shaderCode = shaderString.c_str();
 	switch (t)
 	{

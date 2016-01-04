@@ -2,10 +2,10 @@
 #define MESH
 
 #include "GLEW\glew.h"
-#include "GLFW\glfw3.h"
+//#include "GLFW\glfw3.h"
 
 #include <stdlib.h>
-
+#include <string>
 #include "Vertex.h"
 
 class Mesh 
@@ -20,6 +20,7 @@ private:
 	unsigned numIndices;
 
 public:
+	Mesh(std::string objFileName);
 	Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds);
 	~Mesh(void);
 

@@ -15,7 +15,7 @@ private:
 	ShaderType type;
 
 public:
-	Shader(const GLchar* filePath, ShaderType t);
+	Shader(std::string fileName, ShaderType t);
 	~Shader(void);
 	
 	GLuint     GetShader(void) { return shader; }
