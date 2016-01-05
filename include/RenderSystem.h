@@ -3,8 +3,13 @@
 
 #include "System.h"
 
+#include <GLM\glm.hpp>
+
 class RenderSystem : public System
 {
+private:
+	glm::mat4 projectionMat;
+	
 public:
 	RenderSystem();
 	~RenderSystem();

@@ -7,12 +7,11 @@
 
 class TransformComponent : public Component
 {
-private:
+public:
 	glm::vec3 translation;
 	glm::vec3 rotation;
 	glm::vec3 scale;
 
-public:
 	TransformComponent(void);
 	TransformComponent(glm::vec3 t, glm::vec3 r, glm::vec3 s);
 	virtual ~TransformComponent(void);

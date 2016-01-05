@@ -1,7 +1,7 @@
 #ifndef COMPONENT
 #define COMPONENT
 
-enum ComponentType { BASE = 0, RENDER = 1, TRANSFORM = 2};
+enum ComponentType { BASE = 0, RENDER = 1, TRANSFORM = 2, CAMERA = 3, PHYSICS = 4};
 
 class Component
 {

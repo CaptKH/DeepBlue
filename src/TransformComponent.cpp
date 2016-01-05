@@ -21,14 +21,16 @@ TransformComponent::~TransformComponent(void)
 
 glm::mat4 TransformComponent::Transformation(void)
 {
-	glm::mat4 transform;
-	transform = glm::translate(transform, translation);
-	transform = glm::rotate(transform, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	transform = glm::rotate(transform, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-	transform = glm::rotate(transform, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-	transform = glm::scale(transform, scale);
+	glm::mat4 translationMat;
+	translationMat = glm::translate(translationMat, translation);
+	glm::mat4 rotationMat;
+	rotationMat = glm::rotate(rotationMat, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	rotationMat = glm::rotate(rotationMat, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	rotationMat = glm::rotate(rotationMat, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 scaleMat;
+	scaleMat = glm::scale(scaleMat, scale);
 
-	return transform;
+	return translationMat * rotationMat * scaleMat;
 }
 
 void TransformComponent::Translate(float x, float y, float z) 

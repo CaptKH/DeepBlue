@@ -1,5 +1,8 @@
 #include <InputManager.h>
-#include <CameraManager.h>
+
+#include <EntityManager.h>
+#include <CameraComponent.h>
+#include <Windows.h>
 
 // Input forward declarations
 void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode);
@@ -17,20 +20,44 @@ void InputManager::Initialize(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_callback);
 }
 
-void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
+void InputManager::Update(float dt, float tt)
 {
-	Camera* cam = CameraManager::Instance()->GetCamera();
+	EntityManager* eManager = EntityManager::Instance();
+	Camera* c = eManager->GetComponent<CameraComponent>(eManager->Get("Camera"), ComponentType::CAMERA)->GetCamera();
 
-	// Check if escape has been pressed
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(w, GL_TRUE);
-	if (key == GLFW_KEY_W && action == GLFW_REPEAT)
-		cam->Move(glm::vec3( 0.0f, 0.01f, 0));
-	if (key == GLFW_KEY_A && action == GLFW_REPEAT)
-		cam->Move(glm::vec3(-0.01f,  0, 0));
-	if (key == GLFW_KEY_S && action == GLFW_REPEAT)
-		cam->Move(glm::vec3(0, -0.01f, 0));
-	if (key == GLFW_KEY_D && action == GLFW_REPEAT)
-		cam->Move(glm::vec3( 0.01f,  0, 0));
+	if (keys[GLFW_KEY_W]) {
+		c->Move(CameraDirection::UP);
+	}
+	if (keys[GLFW_KEY_A]) {
+		c->Move(CameraDirection::LEFT);
+	}
+	if (keys[GLFW_KEY_S]) {
+		c->Move(CameraDirection::DOWN);
+	}
+	if (keys[GLFW_KEY_D]) {
+		c->Move(CameraDirection::RIGHT);
+	}
+	if (keys[GLFW_KEY_Q]) {
+		c->Move(CameraDirection::BACKWARD);
+	}
+	if (keys[GLFW_KEY_E]) {
+		c->Move(CameraDirection::FORWARD);
+	}
 }
 
+void InputManager::SetKey(int key, bool value)
+{
+	keys[key] = value;
+}
+
+void key_callback(GLFWwindow* w, int key, int scancode, int action, int mode)
+{
+	InputManager* iManager = InputManager::Instance();
+
+	if (action == GLFW_PRESS) {
+		iManager->SetKey(key, true);
+	}
+	else  if (action == GLFW_RELEASE) {
+		iManager->SetKey(key, false);
+	}
+}

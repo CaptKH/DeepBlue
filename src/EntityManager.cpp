@@ -45,10 +45,8 @@ void EntityManager::Cleanup(void)
 
 bool EntityManager::AddComponent(Entity* e, Component* c)
 {
-	Entity* inList = entities->GetEntity(e->GetTag());
-
-	if (inList && !inList->GetComponents()->Contains(c->GetType())) {
-		inList->GetComponents()->Add(&c);
+	if (!e->GetComponents()->Contains(c->GetType())) {
+		e->GetComponents()->Add(&c);
 		return true;
 	}
 
@@ -57,12 +55,7 @@ bool EntityManager::AddComponent(Entity* e, Component* c)
 
 bool EntityManager::RemoveComponent(Entity* e, ComponentType t)
 {
-	Entity* inList = entities->GetEntity(e->GetTag());
-
-	if (inList) {
-		return inList->GetComponents()->RemoveComponent(t);
-	}
-	return false;
+	return e->GetComponents()->RemoveComponent(t);
 }
 
 std::vector<Entity*> EntityManager::EntitiesWithComponents(ComponentType types, ...)

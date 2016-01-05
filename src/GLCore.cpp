@@ -37,8 +37,8 @@ bool GLCore::Initialize(void)
 
 	glViewport(0, 0, 1920, 1080);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	//glEnable(GL_DEPTH_TEST);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_DEPTH_TEST);
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
 	return true;
 }
 

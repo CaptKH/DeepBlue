@@ -117,7 +117,7 @@ void ResourceManager::GenerateMeshes(void)
 
 	int triangleIndices[] = { 0, 1, 2 };
 
-	Mesh* triangleMesh = new Mesh(triangleVerts, 3, triangleIndices, 3);
+	Mesh* triangleMesh = new Mesh(triangleVerts, 3, triangleIndices, 3, glm::vec3());
 	RegisterMesh("Triangle", triangleMesh);
 
 	GLuint squareVBO;
@@ -131,13 +131,13 @@ void ResourceManager::GenerateMeshes(void)
 
 	int squareIndicies[] = { 0, 1, 2, 0, 2, 3 };
 
-	Mesh* squareMesh = new Mesh(squareVerts, 4, squareIndicies, 6);
+	Mesh* squareMesh = new Mesh(squareVerts, 4, squareIndicies, 6, glm::vec3());
 	RegisterMesh("Square", squareMesh);
 
-	Mesh* suzanne = new Mesh("suzanne.obj");
+	Mesh* suzanne = new Mesh("suzanne.obj", glm::vec3());
 	RegisterMesh("Suzanne", suzanne);
 
-	Mesh* cube = new Mesh("cube.obj");
+	Mesh* cube = new Mesh("cube.obj", glm::vec3(0.5f, 0.5f, 0.5f));
 	RegisterMesh("Cube", cube);
 }
 

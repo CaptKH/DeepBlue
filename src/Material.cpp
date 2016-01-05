@@ -20,6 +20,8 @@ Material::Material(Shader* vShader, Shader* fShader)
 
 	transformUniform = glGetUniformLocation(shaderProgram, "transform");
 	viewUniform = glGetUniformLocation(shaderProgram, "view");
+	projectionUniform = glGetUniformLocation(shaderProgram, "projection");
+	originUniform = glGetUniformLocation(shaderProgram, "origin");
 }
 
 GLuint Material::GetProgram(void)
@@ -35,4 +37,14 @@ GLuint Material::GetViewUniform(void)
 GLuint Material::GetTransformUniform(void)
 {
 	return transformUniform;
+}
+
+GLuint Material::GetProjectionUniform(void)
+{
+	return projectionUniform;
+}
+
+GLuint Material::GetOriginUniform(void)
+{
+	return originUniform;
 }

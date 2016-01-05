@@ -7,11 +7,17 @@
 
 class InputManager : public Singleton<InputManager>
 {
+private:
+	bool keys[1024];
+
 public:
 	InputManager(void);
 	~InputManager(void);
 
 	void Initialize(GLFWwindow* window);
+	void Update(float dt, float tt);
+
+	void SetKey(int key, bool value);
 };
 
 #endif

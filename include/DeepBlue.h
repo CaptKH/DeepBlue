@@ -7,7 +7,6 @@
 #include "InputManager.h"
 #include "EntityManager.h"
 #include "SystemManager.h"
-#include "CameraManager.h"
 #include "ResourceManager.h"
 
 class DeepBlue
@@ -18,10 +17,10 @@ private:
 	InputManager*    iManager;
 	EntityManager*   eManager;
 	SystemManager*   sManager;
-	CameraManager*   cManager;
 	ResourceManager* rManager;
 
-	Entity* test;
+	float totalTime;
+	float deltaTime;
 
 public:
 	DeepBlue(void);
