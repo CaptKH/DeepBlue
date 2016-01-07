@@ -3,13 +3,14 @@
 #include <iostream>
 #include <vector>
 
-Mesh::Mesh(std::string objFileName)
+Mesh::Mesh(std::string objFileName, Texture* tex)
 {
 	vertices = new Vertex();
 	numVertices = 0;
 	indices = new int();
 	numIndices = 0;
 	origin = glm::vec3();
+	texture = tex;
 
 	std::string filePath = "assets/objs/" + objFileName;
 	std::vector<Vertex> objVertices;
@@ -22,13 +23,14 @@ Mesh::Mesh(std::string objFileName)
 	GenerateBuffers();
 }
 
-Mesh::Mesh(std::string objFileName, glm::vec3 o)
+Mesh::Mesh(std::string objFileName, glm::vec3 o, Texture* tex)
 {
 	vertices = new Vertex();
 	numVertices = 0;
 	indices = new int();
 	numIndices = 0;
 	origin = o;
+	texture = tex;
 
 	std::string filePath = "assets/objs/" + objFileName;
 	std::vector<Vertex> objVertices;
@@ -41,11 +43,12 @@ Mesh::Mesh(std::string objFileName, glm::vec3 o)
 	GenerateBuffers();
 }
 
-Mesh::Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds, glm::vec3 o)
+Mesh::Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds, glm::vec3 o, Texture* tex)
 {
 	numVertices = numVerts;
 	numIndices = numInds;
 	origin = o;
+	texture = tex;
 
 	vertices = (Vertex*)malloc(sizeof(Vertex) * numVerts);
 	memcpy(vertices, verts, sizeof(Vertex) * numVerts);
@@ -60,8 +63,12 @@ Mesh::~Mesh(void)
 {
 }
 
-void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::vector<int>& objIndices) 
+void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::vector<int>& objIndices)
 {
+	std::vector<glm::vec3> positions;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec2> uvs;
+
 	FILE* objFile;
 	fopen_s(&objFile, filePath.c_str(), "r");
 	if (objFile != NULL) {
@@ -74,26 +81,52 @@ void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::
 
 			// Process vertices
 			if (strcmp(lineHeader, "v") == 0) {
-				Vertex v = Vertex();
-				fscanf_s(objFile, "%f %f %f\n", &v.position.x, &v.position.y, &v.position.z);
-				v.color = v.position;
-				objVertices.push_back(v);
-				numVertices++;
+				glm::vec3 position;
+				fscanf_s(objFile, "%f %f %f\n", &position.x, &position.y, &position.z);
+				positions.push_back(position);
+			}
+			else if (strcmp(lineHeader, "vt") == 0) {
+				glm::vec2 uv;
+				fscanf_s(objFile, "%f %f\n", &uv.x, &uv.y);
+				uvs.push_back(uv);
+			}
+			else if (strcmp(lineHeader, "vn") == 0) {
+				glm::vec3 normal;
+				fscanf_s(objFile, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
+				normals.push_back(normal);
 			}
 			else if (strcmp(lineHeader, "f") == 0) {
-				int vertInds[3], uvInds[3], normalInds[3];
-				int matches = fscanf_s(objFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertInds[0], &uvInds[0], &normalInds[0], &vertInds[1], &uvInds[1], &normalInds[1], &vertInds[2], &uvInds[2], &normalInds[2]);
+				int indices[9];
+				int matches = fscanf_s(objFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &indices[0], &indices[1], &indices[2], &indices[3], &indices[4], &indices[5], &indices[6], &indices[7], &indices[8]);
 
-				objIndices.push_back(vertInds[0] - 1);
-				objIndices.push_back(vertInds[1] - 1);
-				objIndices.push_back(vertInds[2] - 1);
-				numIndices += 3;
+				Vertex v1;
+				v1.position = positions[indices[0] - 1];
+				v1.normal	= normals[indices[2] - 1];
+				v1.color    = positions[indices[0] - 1];
+				v1.uv		= uvs[indices[1] - 1];
+
+				Vertex v2;
+				v2.position = positions[indices[3] - 1];
+				v2.normal = normals[indices[5] - 1];
+				v2.color = positions[indices[3] - 1];
+				v2.uv = uvs[indices[4] - 1];
+
+				Vertex v3;
+				v3.position = positions[indices[6] - 1];
+				v3.normal = normals[indices[8] - 1];
+				v3.color = positions[indices[6] - 1];
+				v3.uv = uvs[indices[7] - 1];
+
+				objVertices.push_back(v1);
+				objVertices.push_back(v2);
+				objVertices.push_back(v3);
+				objIndices.push_back(numIndices++);
+				objIndices.push_back(numIndices++);
+				objIndices.push_back(numIndices++);
+				numVertices += 3;
 			}
 		}
 	}
-
-	vertices = &objVertices[0];
-	indices = &objIndices[0];
 }
 
 void Mesh::GenerateBuffers(void)
@@ -113,9 +146,13 @@ void Mesh::GenerateBuffers(void)
 
 	// Attribute pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(glm::vec3)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(GLfloat) * 3));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(GLfloat) * 6));
+	glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(GLfloat) * 9));
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
 
 	glBindVertexArray(0);
 }

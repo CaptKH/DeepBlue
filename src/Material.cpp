@@ -17,11 +17,6 @@ Material::Material(Shader* vShader, Shader* fShader)
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR: Program compilation failed.\n" << infoLog << std::endl;
 	}
-
-	transformUniform = glGetUniformLocation(shaderProgram, "transform");
-	viewUniform = glGetUniformLocation(shaderProgram, "view");
-	projectionUniform = glGetUniformLocation(shaderProgram, "projection");
-	originUniform = glGetUniformLocation(shaderProgram, "origin");
 }
 
 GLuint Material::GetProgram(void)
@@ -29,22 +24,33 @@ GLuint Material::GetProgram(void)
 	return shaderProgram;
 }
 
-GLuint Material::GetViewUniform(void)
+GLuint Material::GetUniform(std::string id)
 {
-	return viewUniform;
+	if (uniforms.find(id) == uniforms.end())
+		return 0;
+
+	return uniforms.find(id)->second;
 }
 
-GLuint Material::GetTransformUniform(void)
-{
-	return transformUniform;
+bool Material::GenerateUniform(std::string id) {
+	if (uniforms.find(id) != uniforms.end())
+		return false;
+	GLuint newUniform = glGetUniformLocation(shaderProgram, id.c_str());
+	uniforms.emplace(id, newUniform);
+	return true;
 }
 
-GLuint Material::GetProjectionUniform(void)
+Texture* Material::GetTexture(std::string id)
 {
-	return projectionUniform;
+	if (textures.find(id) == textures.end())
+		return 0;
+	return textures.find(id)->second;
 }
 
-GLuint Material::GetOriginUniform(void)
+bool Material::AddTexture(std::string id, Texture* t)
 {
-	return originUniform;
+	if (textures.find(id) != textures.end())
+		return false;
+	textures.emplace(id, t);
+	return true;
 }

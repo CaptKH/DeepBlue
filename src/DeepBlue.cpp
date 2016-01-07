@@ -9,6 +9,7 @@
 #include <RenderComponent.h>
 #include <PhysicsComponent.h>
 #include <TransformComponent.h>
+#include <LightComponent.h>
 
 // Testing
 #include <random>
@@ -40,10 +41,19 @@ void DeepBlue::Initialize(void)
 	eManager->AddComponent(camera, new CameraComponent());
 	eManager->AddComponent(camera, new TransformComponent());
 	eManager->AddComponent(camera, new PhysicsComponent());
+	Light* light = new Light();
+	light->position = glm::vec3(0.0f, 0.0f, 0.0f);
+	light->color = glm::vec3(1.0f, 1.0f, 1.0f);
+	eManager->AddComponent(camera, new LightComponent(light));
+	
 
-	Entity* toAdd = eManager->Create("ToAdd");
-	eManager->AddComponent(toAdd, new RenderComponent(rManager->GetMesh("Suzanne"), rManager->GetMaterial("Standard")));
-	eManager->AddComponent(toAdd, new TransformComponent(glm::vec3(0, 0, -3.0f), glm::vec3(), glm::vec3(0.5f)));
+	Entity* front = eManager->Create("Front");
+	eManager->AddComponent(front, new RenderComponent(rManager->GetMesh("Suzanne"), rManager->GetMaterial("Standard")));
+	eManager->AddComponent(front, new TransformComponent(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(1.1f)));
+
+	Entity* cube = eManager->Create("Cube");
+	eManager->AddComponent(cube, new RenderComponent(rManager->GetMesh("Cube"), rManager->GetMaterial("Standard")));
+	eManager->AddComponent(cube, new TransformComponent(glm::vec3(0.0f, 3.0f, -3.0f), glm::vec3(), glm::vec3(0.7f)));
 
 	sManager->AddSystem(new PhysicsSystem());
 	sManager->AddSystem(new RenderSystem());
@@ -69,7 +79,7 @@ void DeepBlue::Run(void)
 
 		for (auto& e : entities) {
 			TransformComponent* tComponent = eManager->GetComponent<TransformComponent>(e, ComponentType::TRANSFORM);
-			tComponent->Rotate(1.0f, 1.0f, 0.0f, 1.5f * deltaTime);
+			//tComponent->Rotate(1.0f, 1.0f, 1.0f, 1.5f * deltaTime);
 		}
 
 		//eManager->GetComponent<TransformComponent>(eManager->Get("Test2"), ComponentType::TRANSFORM)->Rotate(1.0f, 1.0f, 0.5f, 0.01f);

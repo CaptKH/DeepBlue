@@ -9,6 +9,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Shader.h"
+#include "Texture.h"
 
 class ResourceManager : public Singleton<ResourceManager>
 {
@@ -16,6 +17,7 @@ private:
 	std::unordered_map<std::string, Mesh*>     meshes;
 	std::unordered_map<std::string, Material*> materials;
 	std::unordered_map<std::string, Shader*>   shaders;
+	std::unordered_map<std::string, Texture*>  textures;
 	std::unordered_map<std::string, GLuint>    vertexArrayObjects;
 
 public:
@@ -34,13 +36,19 @@ public:
 	Shader* GetShader(std::string id);
 	bool    RegisterShader(std::string id, Shader* shader);
 
+	// Textures
+	Texture* GetTexture(std::string id);
+	bool     RegisterTexture(std::string id, Texture* texure);
+
 	// Vertex Array Objects
 	GLuint GetVAO(std::string id);
 	bool   RegisterVAO(std::string id, GLuint vao);
 
-	void GenerateMeshes(void);
+private:
 	void GenerateShaders(void);
+	void GenerateTextures(void);
 	void GenerateMaterials(void);
+	void GenerateMeshes(void);
 };
 
 #endif

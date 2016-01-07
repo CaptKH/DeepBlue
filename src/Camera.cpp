@@ -6,24 +6,17 @@
 #include <GLM/gtc/matrix_transform.hpp>
 
 Camera::Camera(void)
+	: position(glm::vec3()), up(glm::vec3(0.0f, 1.0f, 0.0f)), right(glm::vec3(1.0f, 0.0f, 0.0f)), yaw(270.0f), pitch(0.0f), speed(5.0f)
 {
-	position = glm::vec3();
-	front = glm::vec3(0.0f, 0.0f, -1.0f);
-	up = glm::vec3(0.0f, 1.0f, 0.0f);
-	right = glm::vec3(1.0f, 0.0f, 0.0f);
-	speed = 1.0f;
-
+	
+	Rotate(0.0f, 0.0f);
 	UpdateViewMatrix();
 }
 
 Camera::Camera(glm::vec3 p)
-	: position(p)
+	: position(p), up(glm::vec3(0.0f, 1.0f, 0.0f)), right(glm::vec3(1.0f, 0.0f, 0.0f)), yaw(270.0f), pitch(0.0f), speed(5.0f)
 {
-	front = glm::vec3(0.0f, 0.0f, -1.0f);
-	up = glm::vec3(0.0f, 1.0f, 0.0f);
-	right = glm::vec3(1.0f, 0.0f, 0.0f);
-	speed = 1.0f;
-
+	Rotate(0, 0);
 	UpdateViewMatrix();
 }
 
@@ -39,6 +32,26 @@ glm::vec3 Camera::Position(void)
 void Camera::SetPosition(glm::vec3& p)
 {
 	position = p;
+}
+
+void Camera::Rotate(float y, float p)
+{
+	yaw += y;
+	pitch += p;
+
+	if (pitch > 89.9f)
+		pitch = 89.9f;
+	if (pitch < -89.9f)
+		pitch = -89.9f;
+
+	float yawRad = glm::radians(yaw);
+
+	glm::vec3 camFront = glm::vec3();
+	camFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	camFront.y = sin(glm::radians(pitch));
+	camFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front = glm::normalize(camFront);
+	right = glm::cross(front, up);
 }
 
 glm::mat4 Camera::ViewMatrix(void)

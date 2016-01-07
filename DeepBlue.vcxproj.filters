@@ -43,8 +43,17 @@
     <Filter Include="Header Files\Systems">
       <UniqueIdentifier>{2cc01b62-3adc-4017-85ca-0d489425145f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{40b7a11e-1c8e-4123-9125-dae1d27771c5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Systems">
       <UniqueIdentifier>{cd91a54e-5237-41b1-bb98-727ade284714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Lights">
+      <UniqueIdentifier>{54433ad9-f06f-49f2-877e-8e05f345658c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Lights">
+      <UniqueIdentifier>{c8c1caf3-a805-4299-b496-96fe2d20d022}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ResourceManager.cpp">
-      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
       <Filter>Source Files\Graphics</Filter>
@@ -90,9 +96,6 @@
     <ClCompile Include="src\System.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\DeepBlue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -108,6 +111,18 @@
     <ClCompile Include="src\PhysicsSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LightComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLCore.h">
@@ -115,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="include\Mesh.h">
       <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Vertex.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ResourceManager.h">
       <Filter>Header Files\Managers</Filter>
@@ -167,9 +179,6 @@
     <ClInclude Include="include\SystemManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="include\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\DeepBlue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -185,12 +194,33 @@
     <ClInclude Include="include\PhysicsSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vertex.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LightComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Light.h">
+      <Filter>Header Files\Graphics\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LightManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\StandardVS.glsl">
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\StandardFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\TextureFS.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

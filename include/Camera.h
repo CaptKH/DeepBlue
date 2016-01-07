@@ -13,6 +13,9 @@ private:
 	glm::vec3 front;
 	glm::vec3 up;
 	glm::vec3 right;
+
+	float yaw;
+	float pitch;
 	float speed;
 
 public:
@@ -22,6 +25,7 @@ public:
 
 	glm::vec3 Position(void);
 	void	  SetPosition(glm::vec3& p);
+	void      Rotate(float y, float p);
 	glm::mat4 ViewMatrix(void);
 
 	void UpdateViewMatrix(void);
