@@ -140,6 +140,7 @@
     <ClCompile Include="src\EntityManager.cpp" />
     <ClCompile Include="src\GLCore.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
+    <ClCompile Include="src\InputSystem.cpp" />
     <ClCompile Include="src\LightComponent.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Material.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="include\EntityManager.h" />
     <ClInclude Include="include\GLCore.h" />
     <ClInclude Include="include\InputManager.h" />
+    <ClInclude Include="include\InputSystem.h" />
     <ClInclude Include="include\Light.h" />
     <ClInclude Include="include\LightComponent.h" />
     <ClInclude Include="include\LightManager.h" />

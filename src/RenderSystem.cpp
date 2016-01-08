@@ -71,6 +71,7 @@ void RenderSystem::Update(float dt, float tt)
 		}
 
 		glUniformMatrix4fv(currentMaterial->GetUniform("transform"), 1, GL_FALSE, glm::value_ptr(tComponent->Transformation())); // Model mat
+		glUniformMatrix4fv(material->GetUniform("normalMatrix"), 1, GL_TRUE, glm::value_ptr(glm::inverse(tComponent->Transformation()))); // Normal mat
 		glUniform3fv(currentMaterial->GetUniform("origin"), 1, glm::value_ptr(mesh->Origin()));									 // Origin
 
 		glDrawElements(GL_TRIANGLES, mesh->NumIndicies(), GL_UNSIGNED_INT, 0);

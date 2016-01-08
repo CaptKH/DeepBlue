@@ -1,6 +1,7 @@
 #include <DeepBlue.h>
 
 // Systems
+#include <InputSystem.h>
 #include <PhysicsSystem.h>
 #include <RenderSystem.h>
 
@@ -48,13 +49,18 @@ void DeepBlue::Initialize(void)
 	
 
 	Entity* front = eManager->Create("Front");
-	eManager->AddComponent(front, new RenderComponent(rManager->GetMesh("Suzanne"), rManager->GetMaterial("Standard")));
+	eManager->AddComponent(front, new RenderComponent(rManager->GetMesh("Gollum"), rManager->GetMaterial("Standard")));
 	eManager->AddComponent(front, new TransformComponent(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(1.1f)));
+
+	Entity* falcon = eManager->Create("Falcon");
+	eManager->AddComponent(falcon, new RenderComponent(rManager->GetMesh("DeathStar"), rManager->GetMaterial("Standard")));
+	eManager->AddComponent(falcon, new TransformComponent(glm::vec3(4.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(0.001f)));
 
 	Entity* cube = eManager->Create("Cube");
 	eManager->AddComponent(cube, new RenderComponent(rManager->GetMesh("Cube"), rManager->GetMaterial("Standard")));
 	eManager->AddComponent(cube, new TransformComponent(glm::vec3(0.0f, 3.0f, -3.0f), glm::vec3(), glm::vec3(0.7f)));
 
+	sManager->AddSystem(new InputSystem());
 	sManager->AddSystem(new PhysicsSystem());
 	sManager->AddSystem(new RenderSystem());
 
@@ -73,13 +79,11 @@ void DeepBlue::Run(void)
 		deltaTime = currentTime - totalTime;
 		totalTime = currentTime;
 
-		iManager->Update(deltaTime, totalTime);
-
 		std::vector<Entity*> entities = eManager->EntitiesWithComponents(ComponentType::TRANSFORM);
 
 		for (auto& e : entities) {
 			TransformComponent* tComponent = eManager->GetComponent<TransformComponent>(e, ComponentType::TRANSFORM);
-			//tComponent->Rotate(1.0f, 1.0f, 1.0f, 1.5f * deltaTime);
+			tComponent->Rotate(1.0f, 1.0f, 1.0f, 1.5f * deltaTime);
 		}
 
 		//eManager->GetComponent<TransformComponent>(eManager->Get("Test2"), ComponentType::TRANSFORM)->Rotate(1.0f, 1.0f, 0.5f, 0.01f);

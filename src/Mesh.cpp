@@ -102,19 +102,19 @@ void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::
 				Vertex v1;
 				v1.position = positions[indices[0] - 1];
 				v1.normal	= normals[indices[2] - 1];
-				v1.color    = positions[indices[0] - 1];
+				v1.color    = glm::vec3(0.4f, 0.6f, 0.5f);
 				v1.uv		= uvs[indices[1] - 1];
 
 				Vertex v2;
 				v2.position = positions[indices[3] - 1];
 				v2.normal = normals[indices[5] - 1];
-				v2.color = positions[indices[3] - 1];
+				v2.color = glm::vec3(0.4f, 0.6f, 0.5f);
 				v2.uv = uvs[indices[4] - 1];
 
 				Vertex v3;
 				v3.position = positions[indices[6] - 1];
 				v3.normal = normals[indices[8] - 1];
-				v3.color = positions[indices[6] - 1];
+				v3.color = glm::vec3(0.4f, 0.6f, 0.5f);
 				v3.uv = uvs[indices[7] - 1];
 
 				objVertices.push_back(v1);

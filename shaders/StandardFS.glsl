@@ -34,5 +34,6 @@ void main()
 	vec3 specularLight = spec * light.color * 0.5f;
 
 	vec3 finalColor = (ambientLight + diffuseLight + specularLight) * outColor;
+	//vec3 finalColor = (ambientLight + diffuseLight) * outColor;
     color = vec4(finalColor, 1.0f);
 }

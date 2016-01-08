@@ -1,13 +1,13 @@
-﻿Build started 1/6/2016 2:45:57 AM.
+﻿Build started 1/8/2016 12:33:26 AM.
      1>Project "C:\Users\Captain Kirk\Desktop\DeepBlue\DeepBlue.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\DeepBlue.cpp
          DeepBlue.cpp
-     1>src\DeepBlue.cpp(27): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>src\DeepBlue.cpp(64): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-     1>src\DeepBlue.cpp(75): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+     1>src\DeepBlue.cpp(29): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>src\DeepBlue.cpp(67): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+     1>src\DeepBlue.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.exe" /NOLOGO opengl32.lib glfw3.lib glew32s.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.lib" /MACHINE:X86 /SAFESEH Release\ResourceManager.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.exe" /NOLOGO opengl32.lib glfw3.lib glew32s.lib soil.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.lib" /MACHINE:X86 /SAFESEH Release\ResourceManager.obj
          Release\Camera.obj
          Release\CameraComponent.obj
          Release\Component.obj
@@ -16,6 +16,8 @@
          Release\EntityManager.obj
          Release\GLCore.obj
          Release\InputManager.obj
+         Release\InputSystem.obj
+         Release\LightComponent.obj
          Release\main.obj
          Release\Material.obj
          Release\Mesh.obj
@@ -26,11 +28,13 @@
          Release\Shader.obj
          Release\System.obj
          Release\SystemManager.obj
+         Release\Texture.obj
          Release\TransformComponent.obj
+     1>soil.lib(SOIL.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
      1>LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
      1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
          Generating code
-         0 of 1875 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+         3 of 2383 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
            0 functions were new in current compilation
            0 functions had inline decision re-evaluated but remain unchanged
          Finished generating code
@@ -55,10 +59,11 @@
      1>Shader.obj : warning LNK4049: locally defined symbol ___glewGetShaderInfoLog imported
      1>Shader.obj : warning LNK4049: locally defined symbol ___glewCreateShader imported
      1>Shader.obj : warning LNK4049: locally defined symbol ___glewCompileShader imported
+     1>Texture.obj : warning LNK4049: locally defined symbol ___glewGenerateMipmap imported
      1>glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Captain Kirk\Desktop\DeepBlue\Release\vc120.pdb'; linking object as if no debug info
          DeepBlue.vcxproj -> C:\Users\Captain Kirk\Desktop\DeepBlue\Release\DeepBlue.exe
      1>Done Building Project "C:\Users\Captain Kirk\Desktop\DeepBlue\DeepBlue.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.63
+Time Elapsed 00:00:01.99

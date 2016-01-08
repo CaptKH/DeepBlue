@@ -156,17 +156,14 @@ void ResourceManager::GenerateMeshes(void)
 
 
 	// .objs
-	/*
-
 	Mesh* sphere = new Mesh("sphere.obj");
 	RegisterMesh("Sphere", sphere);
 
-	Mesh* milleniumFalcon = new Mesh("millenium_falcon.obj");
-	RegisterMesh("MilleniumFalcon", milleniumFalcon);
-
 	Mesh* deathStar = new Mesh("death_star.obj");
 	RegisterMesh("DeathStar", deathStar);
-	*/
+
+	Mesh* milleniumFalcon = new Mesh("millenium_falcon.obj");
+	RegisterMesh("MilleniumFalcon", milleniumFalcon);
 
 	Mesh* gollum = new Mesh("gollum.obj", glm::vec3(1.5f, 0.8f, -11.0f));
 	RegisterMesh("Gollum", gollum);
@@ -184,10 +181,11 @@ void ResourceManager::GenerateMeshes(void)
 void ResourceManager::GenerateMaterials(void)
 {
 	Material* standard = new Material(GetShader("StandardVS"), GetShader("StandardFS"));
+	standard->GenerateUniform("origin");
 	standard->GenerateUniform("transform");
 	standard->GenerateUniform("view");
 	standard->GenerateUniform("projection");
-	standard->GenerateUniform("origin");
+	standard->GenerateUniform("normalMatrix");
 	standard->GenerateUniform("objTexture");;
 	standard->GenerateUniform("light.position");
 	standard->GenerateUniform("light.color");
@@ -196,14 +194,15 @@ void ResourceManager::GenerateMaterials(void)
 	RegisterMaterial("Standard", standard);
 
 	Material* textureMat = new Material(GetShader("StandardVS"), GetShader("TextureFS"));
+	textureMat->GenerateUniform("origin");
 	textureMat->GenerateUniform("transform");
 	textureMat->GenerateUniform("view");
 	textureMat->GenerateUniform("projection");
-	textureMat->GenerateUniform("origin");
+	textureMat->GenerateUniform("normalMatrix");
 	textureMat->GenerateUniform("objTexture");
-	standard->GenerateUniform("light.position");
-	standard->GenerateUniform("light.color");
-	standard->GenerateUniform("cameraPos");
+	textureMat->GenerateUniform("light.position");
+	textureMat->GenerateUniform("light.color");
+	textureMat->GenerateUniform("cameraPos");
 	textureMat->AddTexture("Container", GetTexture("Container"));
 	RegisterMaterial("TextureMat", textureMat);
 }

@@ -19,8 +19,8 @@ public:
 	~InputManager(void);
 
 	void Initialize(GLFWwindow* window);
-	void Update(float dt, float tt);
 
+	bool* GetKeys(void);
 	void SetKey(int key, bool value);
 	float LastMouseX(void);
 	float LastMouseY(void);
