@@ -142,6 +142,8 @@
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\InputSystem.cpp" />
     <ClCompile Include="src\LightComponent.cpp" />
+    <ClCompile Include="src\LightManager.cpp" />
+    <ClCompile Include="src\LightSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -150,6 +152,7 @@
     <ClCompile Include="src\RenderComponent.cpp" />
     <ClCompile Include="src\RenderSystem.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\System.cpp" />
     <ClCompile Include="src\SystemManager.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -170,6 +173,7 @@
     <ClInclude Include="include\Light.h" />
     <ClInclude Include="include\LightComponent.h" />
     <ClInclude Include="include\LightManager.h" />
+    <ClInclude Include="include\LightSystem.h" />
     <ClInclude Include="include\LinkedList.h" />
     <ClInclude Include="include\Material.h" />
     <ClInclude Include="include\Mesh.h" />
@@ -180,6 +184,7 @@
     <ClInclude Include="include\RenderSystem.h" />
     <ClInclude Include="include\ResourceManager.h" />
     <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\ShaderProgram.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\System.h" />
     <ClInclude Include="include\SystemManager.h" />

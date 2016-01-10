@@ -10,15 +10,17 @@
 #include "Material.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "ShaderProgram.h"
 
 class ResourceManager : public Singleton<ResourceManager>
 {
 private:
-	std::unordered_map<std::string, Mesh*>     meshes;
-	std::unordered_map<std::string, Material*> materials;
-	std::unordered_map<std::string, Shader*>   shaders;
-	std::unordered_map<std::string, Texture*>  textures;
-	std::unordered_map<std::string, GLuint>    vertexArrayObjects;
+	std::unordered_map<std::string, Mesh*>			meshes;
+	std::unordered_map<std::string, Material*>		materials;
+	std::unordered_map<std::string, Texture*>		textures;
+	std::unordered_map<std::string, Shader*>		shaders;
+	std::unordered_map<std::string, ShaderProgram*> shaderPrograms;
+	std::unordered_map<std::string, GLuint>			vertexArrayObjects;
 
 public:
 	ResourceManager(void);
@@ -32,13 +34,17 @@ public:
 	Material* GetMaterial(std::string id);
 	bool	  RegisterMaterial(std::string id, Material* mat);
 
+	// Textures
+	Texture* GetTexture(std::string id);
+	bool     RegisterTexture(std::string id, Texture* texure);
+
 	// Shaders
 	Shader* GetShader(std::string id);
 	bool    RegisterShader(std::string id, Shader* shader);
 
-	// Textures
-	Texture* GetTexture(std::string id);
-	bool     RegisterTexture(std::string id, Texture* texure);
+	// Shader Programs
+	ShaderProgram* GetShaderProgram(std::string id);
+	bool		   RegisterShaderProgram(std::string id, ShaderProgram* shaderProgram);
 
 	// Vertex Array Objects
 	GLuint GetVAO(std::string id);
@@ -46,6 +52,7 @@ public:
 
 private:
 	void GenerateShaders(void);
+	void GenerateShaderPrograms(void);
 	void GenerateTextures(void);
 	void GenerateMaterials(void);
 	void GenerateMeshes(void);

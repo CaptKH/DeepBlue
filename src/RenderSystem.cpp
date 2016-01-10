@@ -21,6 +21,7 @@ RenderSystem::~RenderSystem(void)
 
 void RenderSystem::Update(float dt, float tt) 
 {
+	// Get entities
 	std::vector<Entity*> rEntities = eManager->EntitiesWithComponents(ComponentType::RENDER, ComponentType::TRANSFORM);
 	RenderComponent* rComponent;
 	TransformComponent* tComponent;
@@ -37,42 +38,37 @@ void RenderSystem::Update(float dt, float tt)
 	std::vector<Entity*> eee  = eManager->EntitiesWithComponents(ComponentType::LIGHT);
 	Entity* lightEntity = eee[0];
 	Light* l = eManager->GetComponent<LightComponent>(lightEntity, ComponentType::LIGHT)->GetLight();
-	TransformComponent* lightTransform = eManager->GetComponent<TransformComponent>(lightEntity, ComponentType::TRANSFORM);
-	glm::vec3 lightPos = l->position;
-
-	if (lightTransform) {
-		lightPos += lightTransform->translation;
-	}
-	
-
 	
 	for (int i = 0; i < rEntities.size(); i++) {
 		rComponent = eManager->GetComponent<RenderComponent>(rEntities[i], ComponentType::RENDER);
 		tComponent = eManager->GetComponent<TransformComponent>(rEntities[i], ComponentType::TRANSFORM);
 		Mesh* mesh = rComponent->GetMesh();
 		Material* material = rComponent->GetMaterial();
+		ShaderProgram* shaderProgram = material->GetProgram();
 
+		// Change current material and set per material data
 		if (material != currentMaterial) {
 			currentMaterial = material;
-			glUseProgram(currentMaterial->GetProgram());
-			glUniformMatrix4fv(material->GetUniform("view"), 1, GL_FALSE, glm::value_ptr(cComponent->GetCamera()->ViewMatrix())); // Camera mat
-			glUniformMatrix4fv(material->GetUniform("projection"), 1, GL_FALSE, glm::value_ptr(projectionMat));					  // Projection mat
-			glUniform3fv(material->GetUniform("light.position"), 1, glm::value_ptr(lightPos));
-			glUniform3fv(material->GetUniform("light.color"), 1, glm::value_ptr(l->color));
-			glUniform3fv(material->GetUniform("cameraPos"), 1, glm::value_ptr(cameraTransform->translation));
+			glUseProgram(shaderProgram->program);
+			shaderProgram->SetVec3("cameraPos", cameraTransform->translation);			  // Camera position
+			shaderProgram->SetMat4("view", cComponent->GetCamera()->ViewMatrix(), false); // Camera mat
+			shaderProgram->SetMat4("projection", projectionMat, false);					  // Projection mat
+			shaderProgram->SetVec3("light.position", l->position);		// Light position
+			shaderProgram->SetVec3("light.color", l->color);			// Light color
+			shaderProgram->SetFloat("light.strength", l->strength);		// Light strength
 		}
 
+		// Change mesh & texture if new entity
 		if (mesh != currentMesh) {
 			currentMesh = mesh;
-			if (mesh->GetTexture() != nullptr) {
-				glBindTexture(GL_TEXTURE_2D, mesh->GetTexture()->GetTexture()); // Texture
-			}
+			glBindTexture(GL_TEXTURE_2D, material->GetTexture("Container2")); // Texture
 			glBindVertexArray(currentMesh->GetVAO());
 		}
 
-		glUniformMatrix4fv(currentMaterial->GetUniform("transform"), 1, GL_FALSE, glm::value_ptr(tComponent->Transformation())); // Model mat
-		glUniformMatrix4fv(material->GetUniform("normalMatrix"), 1, GL_TRUE, glm::value_ptr(glm::inverse(tComponent->Transformation()))); // Normal mat
-		glUniform3fv(currentMaterial->GetUniform("origin"), 1, glm::value_ptr(mesh->Origin()));									 // Origin
+		// Entity specific
+		shaderProgram->SetMat4("transform", tComponent->Transformation(), false);
+		shaderProgram->SetMat4("normalMatrix", glm::inverse(tComponent->Transformation()), true);
+		shaderProgram->SetVec3("origin", mesh->Origin());
 
 		glDrawElements(GL_TRIANGLES, mesh->NumIndicies(), GL_UNSIGNED_INT, 0);
 	}

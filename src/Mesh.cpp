@@ -3,14 +3,13 @@
 #include <iostream>
 #include <vector>
 
-Mesh::Mesh(std::string objFileName, Texture* tex)
+Mesh::Mesh(std::string objFileName)
 {
 	vertices = new Vertex();
 	numVertices = 0;
 	indices = new int();
 	numIndices = 0;
 	origin = glm::vec3();
-	texture = tex;
 
 	std::string filePath = "assets/objs/" + objFileName;
 	std::vector<Vertex> objVertices;
@@ -23,14 +22,12 @@ Mesh::Mesh(std::string objFileName, Texture* tex)
 	GenerateBuffers();
 }
 
-Mesh::Mesh(std::string objFileName, glm::vec3 o, Texture* tex)
+Mesh::Mesh(std::string objFileName, glm::vec3 o)
 {
 	vertices = new Vertex();
 	numVertices = 0;
 	indices = new int();
 	numIndices = 0;
-	origin = o;
-	texture = tex;
 
 	std::string filePath = "assets/objs/" + objFileName;
 	std::vector<Vertex> objVertices;
@@ -39,16 +36,16 @@ Mesh::Mesh(std::string objFileName, glm::vec3 o, Texture* tex)
 
 	vertices = &objVertices[0];
 	indices = &objIndices[0];
+	origin = o;
 
 	GenerateBuffers();
 }
 
-Mesh::Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds, glm::vec3 o, Texture* tex)
+Mesh::Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds, glm::vec3 o)
 {
 	numVertices = numVerts;
 	numIndices = numInds;
 	origin = o;
-	texture = tex;
 
 	vertices = (Vertex*)malloc(sizeof(Vertex) * numVerts);
 	memcpy(vertices, verts, sizeof(Vertex) * numVerts);
@@ -68,6 +65,12 @@ void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec2> uvs;
+	float xMin = 0.0f;
+	float xMax = 0.0f;
+	float yMin = 0.0f;
+	float yMax = 0.0f;
+	float zMin = 0.0f; 
+	float zMax = 0.0f;
 
 	FILE* objFile;
 	fopen_s(&objFile, filePath.c_str(), "r");
@@ -84,6 +87,26 @@ void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::
 				glm::vec3 position;
 				fscanf_s(objFile, "%f %f %f\n", &position.x, &position.y, &position.z);
 				positions.push_back(position);
+
+				// Centroid stuff
+				if (position.x < xMin) {
+					xMin = position.x;
+				}
+				else if (position.x > xMax) {
+					xMax = position.x;
+				}
+				if (position.y < yMin) {
+					yMin = position.y;
+				}
+				else if (position.y > yMax) {
+					yMax = position.y;
+				}
+				if (position.z < zMin) {
+					zMin = position.z;
+				}
+				else if (position.z > zMax) {
+					zMax = position.z;
+				}
 			}
 			else if (strcmp(lineHeader, "vt") == 0) {
 				glm::vec2 uv;
@@ -127,6 +150,8 @@ void Mesh::LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::
 			}
 		}
 	}
+
+	//origin = glm::vec3((xMin + xMax) / 2, (yMin + yMax) / 2, (zMin + zMax) / 2);
 }
 
 void Mesh::GenerateBuffers(void)

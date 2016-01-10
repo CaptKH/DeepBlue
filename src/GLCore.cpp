@@ -7,6 +7,8 @@ GLCore::GLCore(void)
 
 GLCore::~GLCore(void)
 {
+	glfwTerminate();
+	window = 0;
 }
 
 bool GLCore::Initialize(void)
@@ -35,17 +37,13 @@ bool GLCore::Initialize(void)
 		return false;
 	}
 
+	// Standard initializations
 	glViewport(0, 0, 1920, 1080);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
-	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	return true;
-}
 
-GLFWwindow* GLCore::Window(void)
-{
-	return window;
+	return true;
 }

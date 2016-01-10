@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
-#include <Texture.h>
 #include "Vertex.h"
 
 class Mesh 
@@ -21,14 +20,12 @@ private:
 	unsigned numVertices;
 	unsigned numIndices;
 
-	Texture* texture;
-
 	glm::vec3 origin;
 
 public:
-	Mesh(std::string objFileName, Texture* tex = 0);
-	Mesh(std::string objFileName, glm::vec3 o, Texture* tex = 0);
-	Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds, glm::vec3 o, Texture* tex = 0);
+	Mesh(std::string objFileName);
+	Mesh(std::string objFileName, glm::vec3 o);
+	Mesh(Vertex* verts, unsigned numVerts, int* inds, unsigned numInds, glm::vec3 o);
 	~Mesh(void);
 
 	// Accessors
@@ -40,7 +37,6 @@ public:
 	unsigned  NumVertices(void)   { return numVertices; }
 	unsigned  NumIndicies(void)	  { return numIndices;	}
 	glm::vec3 Origin(void)		  { return origin;	    }
-	Texture*  GetTexture(void)	  { return texture;		}
 
 private:
 	void LoadOBJ(std::string filePath, std::vector<Vertex>& objVertices, std::vector<int>& objIndices);

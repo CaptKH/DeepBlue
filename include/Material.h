@@ -1,25 +1,22 @@
 #ifndef MATERIAL
 #define MATERIAL
 
-#include <Shader.h>
 #include <Texture.h>
+#include <ShaderProgram.h>
 #include <unordered_map>
 
 class Material
 {
 private:
-	GLuint shaderProgram;
-	std::unordered_map<std::string, GLuint> uniforms;
+	ShaderProgram* shaderProgram;
 	std::unordered_map<std::string, Texture*> textures;
 
 public:
-	Material(Shader* vShader, Shader* fShader);
+	Material(ShaderProgram* sProgram);
 
-	GLuint   GetProgram(void);
-	GLuint   GetUniform(std::string id);
-	bool     GenerateUniform(std::string id);
-	Texture* GetTexture(std::string id);
-	bool     AddTexture(std::string id, Texture* t);
+	ShaderProgram*   GetProgram(void);
+	GLuint			 GetTexture(std::string id);
+	bool			 AddTexture(std::string id, Texture* t);
 };
 
 #endif

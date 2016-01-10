@@ -12,15 +12,13 @@ class GLCore
 private:
 	GLFWwindow* window;
 
-	SystemManager* sManager;
-
 public:
 	GLCore(void);
 	~GLCore(void);
 
 	bool Initialize(void);
 
-	GLFWwindow* Window(void);
+	GLFWwindow* Window(void) { return window; }
 };
 
 #endif

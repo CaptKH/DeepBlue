@@ -3,6 +3,7 @@
 // Systems
 #include <InputSystem.h>
 #include <PhysicsSystem.h>
+#include <LightSystem.h>
 #include <RenderSystem.h>
 
 // Components
@@ -22,6 +23,8 @@ DeepBlue::DeepBlue(void)
 
 DeepBlue::~DeepBlue(void)
 {
+	delete core;
+	core = 0;
 }
 
 void DeepBlue::Initialize(void)
@@ -38,6 +41,13 @@ void DeepBlue::Initialize(void)
 	// Initialize input callback functions
 	iManager->Initialize(core->Window());
 
+	// Create engine systems (order matters!)
+	sManager->AddSystem(new InputSystem());
+	sManager->AddSystem(new PhysicsSystem());
+	sManager->AddSystem(new LightSystem());
+	sManager->AddSystem(new RenderSystem());
+
+	// Camera
 	Entity* camera = eManager->Create("Camera");
 	eManager->AddComponent(camera, new CameraComponent());
 	eManager->AddComponent(camera, new TransformComponent());
@@ -45,25 +55,23 @@ void DeepBlue::Initialize(void)
 	Light* light = new Light();
 	light->position = glm::vec3(0.0f, 0.0f, 0.0f);
 	light->color = glm::vec3(1.0f, 1.0f, 1.0f);
+	light->strength = 0.6f;
 	eManager->AddComponent(camera, new LightComponent(light));
 	
-
+	// Entities
 	Entity* front = eManager->Create("Front");
 	eManager->AddComponent(front, new RenderComponent(rManager->GetMesh("Gollum"), rManager->GetMaterial("Standard")));
-	eManager->AddComponent(front, new TransformComponent(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(1.1f)));
+	eManager->AddComponent(front, new TransformComponent(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(2.0f)));
 
-	Entity* falcon = eManager->Create("Falcon");
-	eManager->AddComponent(falcon, new RenderComponent(rManager->GetMesh("DeathStar"), rManager->GetMaterial("Standard")));
-	eManager->AddComponent(falcon, new TransformComponent(glm::vec3(4.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(0.001f)));
+	Entity* falcon = eManager->Create("Sphere");
+	eManager->AddComponent(falcon, new RenderComponent(rManager->GetMesh("Sphere"), rManager->GetMaterial("Texture")));
+	eManager->AddComponent(falcon, new TransformComponent(glm::vec3(4.0f, 0.0f, -2.0f), glm::vec3(), glm::vec3(1.1f)));
 
 	Entity* cube = eManager->Create("Cube");
-	eManager->AddComponent(cube, new RenderComponent(rManager->GetMesh("Cube"), rManager->GetMaterial("Standard")));
-	eManager->AddComponent(cube, new TransformComponent(glm::vec3(0.0f, 3.0f, -3.0f), glm::vec3(), glm::vec3(0.7f)));
+	eManager->AddComponent(cube, new RenderComponent(rManager->GetMesh("Cube"), rManager->GetMaterial("Texture")));
+	eManager->AddComponent(cube, new TransformComponent(glm::vec3(0.0f, 3.0f, -2.0f), glm::vec3(), glm::vec3(0.7f)));
 
-	sManager->AddSystem(new InputSystem());
-	sManager->AddSystem(new PhysicsSystem());
-	sManager->AddSystem(new RenderSystem());
-
+	// dt/tt
 	float currentTime = glfwGetTime();
 	deltaTime = currentTime;
 	totalTime = currentTime;
@@ -83,15 +91,11 @@ void DeepBlue::Run(void)
 
 		for (auto& e : entities) {
 			TransformComponent* tComponent = eManager->GetComponent<TransformComponent>(e, ComponentType::TRANSFORM);
-			tComponent->Rotate(1.0f, 1.0f, 1.0f, 1.5f * deltaTime);
+			//tComponent->Rotate(1.0f, 0.0f, 0.0f, 1.5f * deltaTime);
 		}
-
-		//eManager->GetComponent<TransformComponent>(eManager->Get("Test2"), ComponentType::TRANSFORM)->Rotate(1.0f, 1.0f, 0.5f, 0.01f);
 
 		sManager->Update(deltaTime, totalTime);
 
 		glfwSwapBuffers(core->Window());
 	}
-
-	glfwTerminate();
 }

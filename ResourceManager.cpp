@@ -7,6 +7,7 @@ ResourceManager::ResourceManager(void)
 	shaders = std::unordered_map<std::string, Shader*>();
 
 	GenerateShaders();
+	GenerateShaderPrograms();
 	GenerateTextures();
 	GenerateMaterials();
 	GenerateMeshes();
@@ -61,6 +62,22 @@ bool ResourceManager::RegisterMaterial(std::string id, Material* mat)
 	return true;
 }
 
+Texture* ResourceManager::GetTexture(std::string id)
+{
+	if (textures.find(id) == textures.end())
+		return nullptr;
+	else
+		return textures.find(id)->second;
+}
+
+bool ResourceManager::RegisterTexture(std::string id, Texture* texture)
+{
+	if (textures.find(id) != textures.end())
+		return false;
+	else
+		textures.emplace(id, texture);
+}
+
 Shader* ResourceManager::GetShader(std::string id)
 {
 	if (shaders.find(id) == shaders.end())
@@ -79,20 +96,20 @@ bool ResourceManager::RegisterShader(std::string id, Shader* shader)
 	return true;
 }
 
-Texture* ResourceManager::GetTexture(std::string id)
+ShaderProgram* ResourceManager::GetShaderProgram(std::string id)
 {
-	if (textures.find(id) == textures.end())
+	if (shaderPrograms.find(id) == shaderPrograms.end())
 		return nullptr;
-	else
-		return textures.find(id)->second;
+	return shaderPrograms.find(id)->second;
 }
 
-bool ResourceManager::RegisterTexture(std::string id, Texture* texture)
+bool ResourceManager::RegisterShaderProgram(std::string id, ShaderProgram* shaderProgram)
 {
-	if (textures.find(id) != textures.end())
+	if (shaderPrograms.find(id) != shaderPrograms.end()) {
 		return false;
-	else
-		textures.emplace(id, texture);
+	}
+	shaderPrograms.emplace(id, shaderProgram);
+	return true;
 }
 
 GLuint ResourceManager::GetVAO(std::string id)
@@ -125,14 +142,42 @@ void ResourceManager::GenerateShaders(void)
 	RegisterShader("TextureFS", textureFS);
 }
 
+void ResourceManager::GenerateShaderPrograms(void) {
+	ShaderProgram* standard = new ShaderProgram(GetShader("StandardVS"), GetShader("StandardFS"));
+	standard->GenerateUniform("origin");
+	standard->GenerateUniform("transform");
+	standard->GenerateUniform("view");
+	standard->GenerateUniform("projection");
+	standard->GenerateUniform("normalMatrix");
+	standard->GenerateUniform("objTexture");;
+	standard->GenerateUniform("light.position");
+	standard->GenerateUniform("light.color");
+	standard->GenerateUniform("light.strength");
+	standard->GenerateUniform("cameraPos");
+	RegisterShaderProgram("Standard", standard);
+
+	ShaderProgram* texture = new ShaderProgram(GetShader("StandardVS"), GetShader("TextureFS"));
+	texture->GenerateUniform("origin");
+	texture->GenerateUniform("transform");
+	texture->GenerateUniform("view");
+	texture->GenerateUniform("projection");
+	texture->GenerateUniform("normalMatrix");
+	texture->GenerateUniform("objTexture");;
+	texture->GenerateUniform("light.position");
+	texture->GenerateUniform("light.color");
+	texture->GenerateUniform("light.strength");
+	texture->GenerateUniform("cameraPos");
+	RegisterShaderProgram("Texture", texture);
+}
+
 void ResourceManager::GenerateMeshes(void)
 {
 	GLuint triangleVBO;
 	Vertex triangleVerts[] =
 	{
 		Vertex(-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-		Vertex(0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f),
-		Vertex(0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f)
+		Vertex( 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f),
+		Vertex( 0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f)
 	};
 
 	int triangleIndices[] = { 0, 1, 2 };
@@ -151,7 +196,7 @@ void ResourceManager::GenerateMeshes(void)
 
 	int squareIndicies[] = { 2, 1, 0, 2, 0, 3 };
 
-	Mesh* squareMesh = new Mesh(squareVerts, 4, squareIndicies, 6, glm::vec3(), GetTexture("Container"));
+	Mesh* squareMesh = new Mesh(squareVerts, 4, squareIndicies, 6, glm::vec3());
 	RegisterMesh("Square", squareMesh);
 
 
@@ -159,58 +204,45 @@ void ResourceManager::GenerateMeshes(void)
 	Mesh* sphere = new Mesh("sphere.obj");
 	RegisterMesh("Sphere", sphere);
 
-	Mesh* deathStar = new Mesh("death_star.obj");
-	RegisterMesh("DeathStar", deathStar);
+	//Mesh* deathStar = new Mesh("death_star.obj");
+	//RegisterMesh("DeathStar", deathStar);
 
-	Mesh* milleniumFalcon = new Mesh("millenium_falcon.obj");
-	RegisterMesh("MilleniumFalcon", milleniumFalcon);
+	//Mesh* milleniumFalcon = new Mesh("millenium_falcon.obj");
+	//RegisterMesh("MilleniumFalcon", milleniumFalcon);
 
-	Mesh* gollum = new Mesh("gollum.obj", glm::vec3(1.5f, 0.8f, -11.0f));
+	Mesh* gollum = new Mesh("gollum.obj", glm::vec3(1.5f, 1.0f, -11.0f));
 	RegisterMesh("Gollum", gollum);
+
+	Mesh* starDestroyer = new Mesh("star_destroyer.obj");
+	RegisterMesh("StarDestroyer", starDestroyer);
 
 	Mesh* suzanne = new Mesh("suzanne.obj", glm::vec3());
 	RegisterMesh("Suzanne", suzanne);
 
-	Mesh* cube = new Mesh("cube.obj", glm::vec3(0.5f, 0.5f, 0.5f), GetTexture("Container"));
+	Mesh* cube = new Mesh("cube.obj", glm::vec3(0.5f, 0.5f, 0.5f));
 	RegisterMesh("Cube", cube);
 
-	Mesh* stormTrooper = new Mesh("stormtrooper.obj", glm::vec3(), GetTexture("StormtrooperTexture"));
-	RegisterMesh("StormTrooper", stormTrooper);
+	//Mesh* stormTrooper = new Mesh("stormtrooper.obj", glm::vec3(), GetTexture("StormtrooperTexture"));
+	//RegisterMesh("StormTrooper", stormTrooper);
 }
 
 void ResourceManager::GenerateMaterials(void)
 {
-	Material* standard = new Material(GetShader("StandardVS"), GetShader("StandardFS"));
-	standard->GenerateUniform("origin");
-	standard->GenerateUniform("transform");
-	standard->GenerateUniform("view");
-	standard->GenerateUniform("projection");
-	standard->GenerateUniform("normalMatrix");
-	standard->GenerateUniform("objTexture");;
-	standard->GenerateUniform("light.position");
-	standard->GenerateUniform("light.color");
-	standard->GenerateUniform("cameraPos");
-	standard->AddTexture("Container", GetTexture("Container"));
+	Material* standard = new Material(GetShaderProgram("Standard"));
 	RegisterMaterial("Standard", standard);
 
-	Material* textureMat = new Material(GetShader("StandardVS"), GetShader("TextureFS"));
-	textureMat->GenerateUniform("origin");
-	textureMat->GenerateUniform("transform");
-	textureMat->GenerateUniform("view");
-	textureMat->GenerateUniform("projection");
-	textureMat->GenerateUniform("normalMatrix");
-	textureMat->GenerateUniform("objTexture");
-	textureMat->GenerateUniform("light.position");
-	textureMat->GenerateUniform("light.color");
-	textureMat->GenerateUniform("cameraPos");
-	textureMat->AddTexture("Container", GetTexture("Container"));
-	RegisterMaterial("TextureMat", textureMat);
+	Material* texture = new Material(GetShaderProgram("Texture"));
+	texture->AddTexture("Container2", GetTexture("Container2"));
+	RegisterMaterial("Texture", texture);
 }
 
 void ResourceManager::GenerateTextures(void)
 {
 	Texture* container = new Texture("container.jpg", ImageFileType::JPG);
 	RegisterTexture("Container", container);
+
+	Texture* container2 = new Texture("container2.png", ImageFileType::PNG);
+	RegisterTexture("Container2", container2);
 
 	Texture* gun = new Texture("M1911.jpg", ImageFileType::JPG);
 	RegisterTexture("M1911", gun);

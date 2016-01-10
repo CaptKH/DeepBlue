@@ -11,6 +11,7 @@ struct Light
 {
 	vec3 position;
 	vec3 color;
+	float strength;
 };
 
 uniform Light light;
@@ -18,8 +19,11 @@ uniform vec3  cameraPos;
 
 void main()
 {
+	float ambientStrength = 0.6f;
+	float specularStrength = 0.6f;
+
 	// Ambient lighting
-	vec3 ambientLight = light.color * 0.3f;
+	vec3 ambientLight = light.color * light.strength;
 
 	// Diffuse lighting
 	vec3 norm = normalize(outNormal);
@@ -31,7 +35,7 @@ void main()
 	vec3 viewDir = normalize(cameraPos - worldPos);
 	vec3 reflectDir = reflect(-lightDir, norm);
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-	vec3 specularLight = spec * light.color * 0.5f;
+	vec3 specularLight = spec * light.color * light.strength;
 
 	vec3 finalColor = (ambientLight + diffuseLight + specularLight) * outColor;
 	//vec3 finalColor = (ambientLight + diffuseLight) * outColor;
